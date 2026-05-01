@@ -1,4 +1,5 @@
 LETRAS = "TRWAGMYFPDXBNJZSQVHLCKE"
+import sys
 
 def calcular_letra(numero):
     return LETRAS[numero % 23]
@@ -23,15 +24,21 @@ def validar_dni(dni):
         return False, f"DNI no válido. La letra debería ser {letra_correcta}, no {letra_introducida}."
 
 def main():
-    print("=== Validador de DNI español ===")
-    while True:
-        dni = input("\nIntroduce un DNI (o 'salir' para terminar): ")
-        if dni.lower() == "salir":
-            print("Hasta luego.")
-            break
+    if len(sys.argv) > 1:
+        dni = sys.argv[1]
         valido, mensaje = validar_dni(dni)
         estado = "VÁLIDO" if valido else "NO VÁLIDO"
         print(f"{estado} — {mensaje}")
+    else:
+        print("=== Validador de DNI español ===")
+        while True:
+            dni = input("\nIntroduce un DNI (o 'salir' para terminar): ")
+            if dni.lower() == "salir":
+                print("Hasta luego.")
+                break
+            valido, mensaje = validar_dni(dni)
+            estado = "VÁLIDO" if valido else "NO VÁLIDO"
+            print(f"{estado} — {mensaje}")
 
 if __name__ == "__main__":
     main()
